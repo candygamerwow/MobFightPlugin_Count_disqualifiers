@@ -1,0 +1,5 @@
+name: MobFightPlugin
+version: '${project.version}'
+main: org.mobfightplugin.MobFightPlugin
+api-version: 1.19
+load: STARTUP

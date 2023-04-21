@@ -1,0 +1,5 @@
+name: MobFightPlugin
+version: '1.0-SNAPSHOT'
+main: org.mobfightplugin.MobFightPlugin
+api-version: 1.19
+load: STARTUP

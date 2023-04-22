@@ -18,6 +18,9 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 public class MobFightListener implements Listener{
     private final MobFightPlugin plugin;
     private int playerDeaths = 0;
+    private final String worldName = "mob_fighting";
+    private final String logFolderName = "MobFightPlugin_log";
+    private final String logFileName = "banned_mob_fight_players.log";
 
     public MobFightListener(MobFightPlugin plugin) {
         this.plugin = plugin;
@@ -29,7 +32,7 @@ public class MobFightListener implements Listener{
         Player player = event.getEntity();
 
         // Check if the event occurred in the mob_fighting world
-        if (player.getWorld().getName().equalsIgnoreCase("mob_fighting")) {
+        if (player.getWorld().getName().equalsIgnoreCase(worldName)) {
             playerDeaths++;
 
             if (playerDeaths <= 10) {
@@ -55,7 +58,7 @@ public class MobFightListener implements Listener{
         Player player = event.getPlayer();
 
         // Check if the event occurred in the mob_fighting world
-        if (player.getWorld().getName().equalsIgnoreCase("mob_fighting")) {
+        if (player.getWorld().getName().equalsIgnoreCase(worldName)) {
             if (event.getRightClicked() instanceof Player) {
                 event.setCancelled(true);
             }
@@ -63,16 +66,12 @@ public class MobFightListener implements Listener{
     }
 
     private void logBannedPlayer(String playerName) {
-        String logFolderName = "MobFightPlugin_log";
-        String logFileName = "banned_mob_fight_players.log";
-
         File logFolder = new File(plugin.getDataFolder().getParentFile(), logFolderName);
         if (!logFolder.exists()) {
             logFolder.mkdirs();
         }
 
         Path logFilePath = Paths.get(logFolder.getPath(), logFileName);
-
         try {
             if (!Files.exists(logFilePath)) {
                 Files.createFile(logFilePath);
